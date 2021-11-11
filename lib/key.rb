@@ -7,7 +7,7 @@ class Key
               :c_shift,
               :d_shift
 
-  def initialize(key)
+  def initialize(key = generate_key_digits)
     @key = key
     @key_digits = key.chars
     @a_shift = a_shift
@@ -40,7 +40,7 @@ class Key
     all_shifts = [a_shift, b_shift, c_shift, d_shift]
   end
 
-  def generate_key_digits
+  def generate_key_digits #in here to pass tests, but probably unneccesasarey
     key = ("0".."99999").to_a.sample
     key.rjust(5, '0')
   end

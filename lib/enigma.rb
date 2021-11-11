@@ -1,14 +1,16 @@
 class Enigma
+  include Shift
 
   attr_reader :message,
               :key,
-              :date
+              :offset,
+              :character_set
 
   def initialize
     @message = nil
     @key = nil
     # @date = check_date(date)
-    @date = nil
+    @offset = nil
     @character_set = ('a'..'z').to_a << " "
   end
 
@@ -42,9 +44,11 @@ class Enigma
   def encrypt(message, key = generate_key, date = format_date)
     @message = message
     @key = Key.new(key)
-    @offset = 
-    @date = date
-    require "pry"; binding.pry
+    @offset = Offset.new(date)
+
+
+
+
 
   end
 end
