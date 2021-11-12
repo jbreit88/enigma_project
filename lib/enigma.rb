@@ -21,22 +21,13 @@ class Enigma
     key.rjust(5, '0')
   end
 
-  # def check_date(date)
-  #   date_check = Date.strptime(date, '%d%m%y')
-  #   require "pry"; binding.pry
-  #   if Date.valid_date?(date)
-  #     true
-  #   elsif
-  #     false
-  #   end
-  # end
-  #
-  # def date_valid?(date)
-  #   require "pry"; binding.pry
-  #  Date.parse(date).strftime('%d%m%y') == date
-  # end
+  def date_valid?(date)
+    day = date[0] + date[1]
+    month = date[2] + date[3]
+    year = date[4] + date[5]
 
-
+    Date.valid_date? year.to_i, month.to_i, day.to_i
+  end
 
   def format_date
     date = Date.today
@@ -48,13 +39,10 @@ class Enigma
     puts "Please input again."
   end
 
-  # def message_format(message)
-  #   message.downcase.chars
-  # end
-
   def encrypt(message, key = generate_key, date = format_date)
     return error_message unless key.length == 5
     return error_message unless date.length == 6
+    return error_message unless date_valid?(date) == true
 
     @message = message.downcase.chars
     @key = Key.new(key)
@@ -83,13 +71,13 @@ class Enigma
       end
     end
     encrypted_message.join
-    require "pry"; binding.pry
   end
 
 
   def decrypt(message, key, date)
     return error_message unless key.length == 5
     return error_message unless date.length == 6
+    return error_message unless date_valid?(date) == true
 
     @message = message.downcase.chars
     @key = Key.new(key)
@@ -97,28 +85,26 @@ class Enigma
 
     final_shifted_values = total_shift(@key.key_shifts, @offset.offset_shifts)
 
-    encrypted_message = []
+    decrypted_message = []
 
     @message.each_with_index do |character, index|
       slice_index = @character_set.find_index(character)
       if !@character_set.include?(character)
-        encrypted_message << character
+        decrypted_message << character
       elsif (0..1000).step(4).to_a.include?(index)
-        encrypted_character = @character_set.rotate(final_shifted_values[0]).slice(slice_index)
-        encrypted_message << encrypted_character
+        encrypted_character = @character_set.rotate(-final_shifted_values[0]).slice(slice_index)
+        decrypted_message << encrypted_character
       elsif (1..1001).step(4).to_a.include?(index)
-        encrypted_character = @character_set.rotate(final_shifted_values[1]).slice(slice_index)
-        encrypted_message << encrypted_character
+        encrypted_character = @character_set.rotate(-final_shifted_values[1]).slice(slice_index)
+        decrypted_message << encrypted_character
       elsif (2..1002).step(4).to_a.include?(index)
-        encrypted_character = @character_set.rotate(final_shifted_values[2]).slice(slice_index)
-        encrypted_message << encrypted_character
+        encrypted_character = @character_set.rotate(-final_shifted_values[2]).slice(slice_index)
+        decrypted_message << encrypted_character
       elsif (3..1003).step(4).to_a.include?(index)
-        encrypted_character = @character_set.rotate(final_shifted_values[3]).slice(slice_index)
-        encrypted_message << encrypted_character
+        encrypted_character = @character_set.rotate(-final_shifted_values[3]).slice(slice_index)
+        decrypted_message << encrypted_character
       end
     end
-    encrypted_message.join
+    decrypted_message.join
   end
-
-
 end

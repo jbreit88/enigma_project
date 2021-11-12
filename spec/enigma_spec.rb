@@ -73,7 +73,7 @@ RSpec.describe Enigma do
     end
 
     it 'returns error message if key is not a key' do
-      expect(enigma.encrypt("Hello World!", "01234", "09199")).to be nil
+      expect(enigma.encrypt("Hello World!", "0134", "091299")).to be nil
     end
 
     it 'returns error message if date is not a date' do
@@ -83,10 +83,17 @@ RSpec.describe Enigma do
 
   describe '#decrypt' do
     it 'resets encrypted message to original' do
-      enigma.decrypt
-
-      xpect(enigma.decrypt).to eq []
+      message = "puhtwpswza !"
+      key = "01234"
+      date = "091299"
+      expect(enigma.decrypt(message, key, date)).to eq("hello world!")
     end
+  end
+
+  it 'check if date is real' do
+    expect(enigma.date_valid?("010199")).to be true
+
+    expect(enigma.date_valid?("996400")).to be false
   end
 
   # it 'has attributes' do
