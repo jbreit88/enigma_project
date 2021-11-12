@@ -5,7 +5,8 @@ class Offset
               :a_offset,
               :b_offset,
               :c_offset,
-              :d_offset
+              :d_offset,
+              :offset_shifts
 
 
   def initialize(date)
@@ -15,6 +16,7 @@ class Offset
     @b_offset = @offset_digits[1]
     @c_offset = @offset_digits[2]
     @d_offset = @offset_digits[3]
+    @offset_shifts = {a_shift: a_offset, b_shift: b_offset, c_shift: c_offset, d_shift: d_offset}
   end
 
   def square_date

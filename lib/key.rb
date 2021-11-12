@@ -5,7 +5,8 @@ class Key
               :a_shift,
               :b_shift,
               :c_shift,
-              :d_shift
+              :d_shift,
+              :key_shifts
 
   def initialize(key = generate_key_digits)
     @key = key
@@ -14,6 +15,7 @@ class Key
     @b_shift = b_shift
     @c_shift = c_shift
     @d_shift = d_shift
+    @key_shifts = {a_shift: a_shift, b_shift: b_shift, c_shift: c_shift, d_shift: d_shift}
   end
 
   def a_shift

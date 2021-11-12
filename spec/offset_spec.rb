@@ -27,6 +27,11 @@ RSpec.describe Offset do
     expect(offset.offset_digits[1]). to be_a Integer
   end
 
+  it 'has hash of offset values' do
+    expect(offset.offset_shifts).to be_a Hash
+    expect(offset.offset_shifts).to eq({a_shift: 3, b_shift: 3, c_shift: 4, d_shift: 4})
+  end
+
 
 
 

@@ -18,15 +18,27 @@ RSpec.describe Enigma do
     expect(enigma.character_set.length).to eq 27
   end
 
+  it 'can generate random 5 digit keys' do
+    expect(enigma.generate_key).to be_a String
+
+    expect(enigma.generate_key.length).to eq 5
+
+    expect("00000".."99999").to include(enigma.generate_key)
+  end
+
+  it 'returns date in string with 6 digits' do
+    expect(enigma.format_date).to be_a String
+    expect(enigma.format_date.length).to eq 6
+  end
+
   describe '#encrypt' do
     before(:each) do
       @enigma_1 = Enigma.new
       @enigma_1.encrypt("Hello World!", "01234", "091299")
-      require "pry"; binding.pry
     end
 
     it 'takes three arguments' do
-      expect(@enigma_1.message).to eq "Hello World!"
+      expect(@enigma_1.message).to eq(["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", "!"])
       expect(@enigma_1.key).to be_a Key
       expect(@enigma_1.key.key_digits).to be_a Array
       expect(@enigma_1.key.key_digits).to eq ['0', '1', '2', '3', '4']
@@ -41,7 +53,7 @@ RSpec.describe Enigma do
     it 'can take only message arg' do
       enigma.encrypt("Hello World!")
 
-      expect(enigma.message).to eq "Hello World!"
+      expect(enigma.message).to eq(["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", "!"])
       expect(enigma.key).to be_a Key
       expect(enigma.key.key_digits).to be_a Array
       expect('0'..'99').to include enigma.key.key_digits[0]
@@ -51,7 +63,29 @@ RSpec.describe Enigma do
     end
 
     it 'returns encrypted message' do
-      expect(enigma.encrypt("Hello World!", "01234", "091299")).to eq []
+      expected = enigma.encrypt("Hello World!", "01234", "091299")
+
+      expect(enigma.encrypt("Hello World!", "01234", "091299")).to be_a String
+
+      expect("Hello World!".length).to eq expected.length
+
+      expect(expected).to eq "puhtwpswza !"
+    end
+
+    it 'returns error message if key is not a key' do
+      expect(enigma.encrypt("Hello World!", "01234", "09199")).to be nil
+    end
+
+    it 'returns error message if date is not a date' do
+      expect(enigma.encrypt("Hello World!", "01234", "09199")).to be nil
+    end
+  end
+
+  describe '#decrypt' do
+    it 'resets encrypted message to original' do
+      enigma.decrypt
+
+      xpect(enigma.decrypt).to eq []
     end
   end
 
