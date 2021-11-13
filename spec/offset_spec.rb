@@ -9,10 +9,7 @@ RSpec.describe Offset do
 
   it 'has attributes' do
     expect(offset.date).to eq "090688"
-    expect(offset.a_offset).to eq 3
-    expect(offset.b_offset).to eq 3
-    expect(offset.c_offset).to eq 4
-    expect(offset.d_offset).to eq 4
+    expect(offset.offset_digits).to eq [3, 3, 4, 4]
   end
 
   it 'squares the date' do
@@ -31,8 +28,4 @@ RSpec.describe Offset do
     expect(offset.offset_shifts).to be_a Hash
     expect(offset.offset_shifts).to eq({a_shift: 3, b_shift: 3, c_shift: 4, d_shift: 4})
   end
-
-
-
-
 end
