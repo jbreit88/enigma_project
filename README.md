@@ -1,5 +1,5 @@
 # enigma_project
-Turing 2110-BE-Mod1 Final Project
+This project comepleted in requirement of the Turing 2110-Mod1 Back-End Program
 
 ![languages](https://img.shields.io/github/languages/top/jbreit88/enigma_project?color=red)
 ![PRs](https://img.shields.io/github/issues-pr-closed/jbreit88/enigma_project)
@@ -8,7 +8,7 @@ Turing 2110-BE-Mod1 Final Project
 [![All Contributors](https://img.shields.io/badge/contributors-1-orange.svg?style=flat)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-*Author* ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+**Author** ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
