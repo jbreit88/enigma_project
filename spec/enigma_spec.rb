@@ -90,7 +90,7 @@ RSpec.describe Enigma do
     end
   end
 
-  it 'check if date is real' do
+  it 'checks if date is real' do
     expect(enigma.date_valid?("010199")).to be true
 
     expect(enigma.date_valid?("996400")).to be false
