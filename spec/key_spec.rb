@@ -35,7 +35,7 @@ RSpec.describe Key do
       expect(key_1.d_shift).to eq 34
     end
 
-    it 'has array of shifts' do
+    it 'has hash of shifts' do
       expect(key_1.key_shifts).to be_a Hash
       expect(key_1.key_shifts).to eq({a_shift: 1, b_shift: 12, c_shift: 23, d_shift: 34})
     end

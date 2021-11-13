@@ -31,8 +31,4 @@ RSpec.describe Offset do
     expect(offset.offset_shifts).to be_a Hash
     expect(offset.offset_shifts).to eq({a_shift: 3, b_shift: 3, c_shift: 4, d_shift: 4})
   end
-
-
-
-
 end
