@@ -88,10 +88,11 @@ class Enigma
   end
 
   def crack(message, date = default_date)
-    message = message.downcase.chars
+    message = message.chomp.downcase.chars
     # require "pry"; binding.pry
     message_last_four = message.slice(-4..-1)
     shifts_array = [] # array of integers indicating the four shifts for letters
+
 
     message_last_four.each_with_index do |character, index|
       if index == 0
