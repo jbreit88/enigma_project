@@ -16,7 +16,7 @@ def encrypt_message(message_file, encrypted_file)
   encrypted_text.puts(encrypt_info[:encryption])
   encrypted_text.close
 
-  puts encrypt_info
+  puts "Created '#{encrypted_file}' with the key #{encrypt_info[:key]} and the date #{encrypt_info[:date]}."
 end
 
 encrypt_message(message_file, encrypted_file)

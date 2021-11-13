@@ -1,9 +1,9 @@
-require_relative 'shift'
+require_relative 'helpable'
 require './lib/key'
 require './lib/offset'
 
 class Enigma
-  include Shiftable
+  include Helpable
 
   attr_reader :message,
               :key,
@@ -16,24 +16,6 @@ class Enigma
     # @date = check_date(date)
     @offset = nil
     @character_set = ('a'..'z').to_a << " "
-  end
-
-  def date_valid?(date)
-    day = date[0] + date[1]
-    month = date[2] + date[3]
-    year = date[4] + date[5]
-
-    Date.valid_date? year.to_i, month.to_i, day.to_i
-  end
-
-  def format_date
-    date = Date.today
-    date.strftime('%d%m%y')
-  end
-
-  def error_message
-    puts "That input is incorrect!"
-    puts "Please input again."
   end
 
   def encrypt(message, key = generate_key, date = format_date)
@@ -88,16 +70,16 @@ class Enigma
       slice_index = @character_set.find_index(character)
       if !@character_set.include?(character)
         decrypted_message << character
-      elsif (0..1000).step(4).to_a.include?(index)
+      elsif a_shift_range(index)
         encrypted_character = @character_set.rotate(-final_shifted_values[0]).slice(slice_index)
         decrypted_message << encrypted_character
-      elsif (1..1001).step(4).to_a.include?(index)
+      elsif b_shift_range(index)
         encrypted_character = @character_set.rotate(-final_shifted_values[1]).slice(slice_index)
         decrypted_message << encrypted_character
-      elsif (2..1002).step(4).to_a.include?(index)
+      elsif c_shift_range(index)
         encrypted_character = @character_set.rotate(-final_shifted_values[2]).slice(slice_index)
         decrypted_message << encrypted_character
-      elsif (3..1003).step(4).to_a.include?(index)
+      elsif d_shift_range(index)
         encrypted_character = @character_set.rotate(-final_shifted_values[3]).slice(slice_index)
         decrypted_message << encrypted_character
       end

@@ -2,20 +2,12 @@ class Offset
 
   attr_reader :date,
               :offset_digits,
-              :a_offset,
-              :b_offset,
-              :c_offset,
-              :d_offset,
               :offset_shifts
 
   def initialize(date)
     @date = date
     @offset_digits = get_digits
-    @a_offset = @offset_digits[0]
-    @b_offset = @offset_digits[1]
-    @c_offset = @offset_digits[2]
-    @d_offset = @offset_digits[3]
-    @offset_shifts = {a_shift: a_offset, b_shift: b_offset, c_shift: c_offset, d_shift: d_offset}
+    @offset_shifts = {a_shift: @offset_digits[0], b_shift: @offset_digits[1], c_shift: @offset_digits[2], d_shift: @offset_digits[3]}
   end
 
   def square_date
