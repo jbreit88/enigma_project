@@ -27,3 +27,24 @@ Project specs can be found here: [Turing Enigma Project](https://backend.turing.
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.
+
+# Self Assessment
+Self assessment is based on the rubric found [here](https://backend.turing.edu/module1/projects/enigma/rubric)
+
+## Functionality - self-assessed score: 3.5
+As of writing this README, my decryption program is able to crack a message knowing that it has been enciphered with the Caesar cipher implemnenting an ABCD shift, and knowing that the final four characters of a message are " end". 
+
+However, it yet lacks the functionality to reproduce the keys used to encipher it, or to implement the date in cracking it. Because it does not follow the interaction pattern output exactly, but does still maintain functionality, I would score myself between a 3 and 4 for this section.
+
+## Object Oriented Programming (OOP) - self-assessed score: 3.5
+In regard to OOP I would say my decryption program meets expectations. I have broken it into logical component parts, used each component to execute the functions of the program, and attempted to maintain SRP throughout my code base.
+
+In order to keep my enigma class code clean, and further organize the helper methods needed to operate the enigma program, I incorporated a module: Helpable. The scope of this project was limited, but it is my intent that should this program come to encapsulate further functionality for decryption in the future, these helper methods may be used more broadly to validate, generate, and organize information.
+
+I believe that my organization of the code base and the implementation of OOP concepts lands me solidly in meets expectations, and I would score myself between a 3 and a 4.
+
+## Ruby Conventions and Mechanics - self-assessed score: 
+
+
+
+
