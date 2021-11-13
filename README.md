@@ -1,6 +1,8 @@
 # enigma_project
 This project comepleted in requirement of the Turing 2110-Mod1 Back-End Program
 
+Project specs can be found here: [Turing Enigma Project](https://backend.turing.edu/module1/projects/enigma/index)
+
 ![languages](https://img.shields.io/github/languages/top/jbreit88/enigma_project?color=red)
 ![PRs](https://img.shields.io/github/issues-pr-closed/jbreit88/enigma_project)
 ![rspec](https://img.shields.io/gem/v/rspec?color=blue&label=rspec)
