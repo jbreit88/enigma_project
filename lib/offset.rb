@@ -8,7 +8,6 @@ class Offset
               :d_offset,
               :offset_shifts
 
-
   def initialize(date)
     @date = date
     @offset_digits = get_digits

@@ -10,4 +10,20 @@ module Shiftable
     key = ("0".."99999").to_a.sample
     key.rjust(5, '0')
   end
+
+  def return_encryption_hash(message, key, date)
+    return_info_hash = {
+      encryption: message,
+      key: key,
+      date: date
+    }
+  end
+
+  def return_decryption_hash(message, key, date)
+    return_info_hash = {
+      decryption: message,
+      key: key,
+      date: date
+    }
+  end
 end

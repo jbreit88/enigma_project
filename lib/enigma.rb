@@ -65,7 +65,7 @@ class Enigma
         encrypted_message << encrypted_character
       end
     end
-    encrypted_message.join
+    return_encryption_hash(encrypted_message.join, key, date)
   end
 
 
@@ -100,6 +100,6 @@ class Enigma
         decrypted_message << encrypted_character
       end
     end
-    decrypted_message.join
+    return_decryption_hash(decrypted_message.join, key, date)
   end
 end

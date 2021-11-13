@@ -65,11 +65,11 @@ RSpec.describe Enigma do
     it 'returns encrypted message' do
       expected = enigma.encrypt("Hello World!", "01234", "091299")
 
-      expect(enigma.encrypt("Hello World!", "01234", "091299")).to be_a String
+      expect(enigma.encrypt("Hello World!", "01234", "091299")).to be_a Hash
 
-      expect("Hello World!".length).to eq expected.length
+      expect("Hello World!".length).to eq expected[:encryption].length
 
-      expect(expected).to eq "puhtwpswza !"
+      expect(expected[:encryption]).to eq "puhtwpswza !"
     end
 
     it 'returns error message if key is not a key' do
@@ -84,9 +84,14 @@ RSpec.describe Enigma do
   describe '#decrypt' do
     it 'resets encrypted message to original' do
       message = "puhtwpswza !"
+      decrypt_message = "hello world!"
       key = "01234"
       date = "091299"
-      expect(enigma.decrypt(message, key, date)).to eq("hello world!")
+      expect(enigma.decrypt(message, key, date)).to be_a Hash
+
+      expect(enigma.decrypt(message, key, date).values).to include(decrypt_message)
+      expect(enigma.decrypt(message, key, date).values).to include(date)
+      expect(enigma.decrypt(message, key, date).values).to include(key)
     end
   end
 
