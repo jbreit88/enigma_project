@@ -1,4 +1,6 @@
 require_relative 'shift'
+require './lib/key'
+require './lib/offset'
 
 class Enigma
   include Shiftable

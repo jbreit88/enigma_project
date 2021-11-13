@@ -1,21 +1,25 @@
 require 'date'
 require './lib/enigma'
 
+message_file = ARGV[0]
+encrypted_file = ARGV[1]
 
-message
-def encrypt_message(message, encrypted)
+def encrypt_message(message_file, encrypted_file)
+  enigma = Enigma.new
 
-  message_text = File.open(message)
+  message_text = File.read(message_file)
 
-  message_text.read
-  #open file
-  #get text
-  #pass text as message arg
-  #use rand key and todays date
+  encrypted_text = File.new(encrypted_file, "w")
 
+  encrypt_info = enigma.encrypt(message_text)
+
+  encrypted_text.puts(encrypt_info[:encryption])
+  encrypted_text.close
+
+  puts encrypt_info
 end
 
-encrypt_message
+encrypt_message(message_file, encrypted_file)
 #two command line arguments
 
 #take in existing txt with message to encrypt
