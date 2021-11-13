@@ -5,4 +5,9 @@ module Shiftable
 
     total_shift.values
   end
+
+  def generate_key
+    key = ("0".."99999").to_a.sample
+    key.rjust(5, '0')
+  end
 end

@@ -16,11 +16,6 @@ class Enigma
     @character_set = ('a'..'z').to_a << " "
   end
 
-  def generate_key
-    key = ("0".."99999").to_a.sample
-    key.rjust(5, '0')
-  end
-
   def date_valid?(date)
     day = date[0] + date[1]
     month = date[2] + date[3]
