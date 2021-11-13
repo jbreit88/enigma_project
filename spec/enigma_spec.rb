@@ -1,7 +1,7 @@
 require './lib/enigma'
 require './lib/key'
 require './lib/offset'
-require './lib/shift'
+require './lib/helpable'
 
 RSpec.describe Enigma do
   let(:enigma) {Enigma.new}
@@ -47,7 +47,6 @@ RSpec.describe Enigma do
       expect(@enigma_1.offset).to be_a Offset
       expect(@enigma_1.offset.offset_digits).to be_a Array
       expect(@enigma_1.offset.offset_digits).to eq [7, 4, 0, 1]
-      expect(@enigma_1.offset.a_offset).to eq 7
     end
 
     it 'can take only message arg' do
