@@ -7,7 +7,7 @@ module Helpable
     key.rjust(5, '0')
   end
 
-  def format_date # Creates a 6 digit string representing today's date.
+  def default_date # Creates a 6 digit string representing today's date.
     date = Date.today
     date.strftime('%d%m%y')
   end
@@ -49,6 +49,14 @@ module Helpable
     return_info_hash = {
       decryption: message,
       key: key,
+      date: date
+    }
+  end
+
+  def return_cracked_hash(message, key, date)
+    return_info_hash = {
+      decryption: message,
+      shift_values: key,
       date: date
     }
   end

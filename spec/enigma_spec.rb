@@ -27,8 +27,8 @@ RSpec.describe Enigma do
   end
 
   it 'returns date in string with 6 digits' do
-    expect(enigma.format_date).to be_a String
-    expect(enigma.format_date.length).to eq 6
+    expect(enigma.default_date).to be_a String
+    expect(enigma.default_date.length).to eq 6
   end
 
   describe '#encrypt' do
@@ -98,5 +98,20 @@ RSpec.describe Enigma do
     expect(enigma.date_valid?("010199")).to be true
 
     expect(enigma.date_valid?("996400")).to be false
+  end
+
+  describe '#crack' do
+    before(:each) do
+      @enigma_2 = Enigma.new
+      @decrypt_message = @enigma_2.encrypt("Hello World! end", "01234", "091299")[:encryption]
+    end
+
+    it 'returns hash' do
+      expect(@enigma_2.crack(@decrypt_message)).to be_a Hash
+    end
+
+    it 'returns deciphered message downcased' do
+      expect(@enigma_2.crack(@decrypt_message)[:decryption]).to eq "hello world! end"
+    end
   end
 end
