@@ -2,17 +2,17 @@ module Helpable
 
   # Enigma class helper methods
 
-  def generate_key # Generates a random 5 digit key.
+  def generate_key
     key = ("0".."99999").to_a.sample
     key.rjust(5, '0')
   end
 
-  def default_date # Creates a 6 digit string representing today's date.
+  def default_date
     date = Date.today
     date.strftime('%d%m%y')
   end
 
-  def date_valid?(date) # Checks if date input is a valid date.
+  def date_valid?(date)
     day = date[0] + date[1]
     month = date[2] + date[3]
     year = date[4] + date[5]
@@ -20,12 +20,9 @@ module Helpable
     Date.valid_date? year.to_i, month.to_i, day.to_i
   end
 
-  def error_message # Error for incorrectly input information.
-    puts "That input is incorrect!"
-    puts "Please input again."
+  def error_message
+    puts "That input is incorrect! Please input again."
   end
-
-
 
   # Calculate total shift values from keys and offsets
 
@@ -59,23 +56,5 @@ module Helpable
       shift_values: key,
       date: date
     }
-  end
-
-  # Create range arrays for shifts
-
-  def a_shift_range(index)
-    (0..10000).step(4).to_a.include?(index)
-  end
-
-  def b_shift_range(index)
-    (1..10000).step(4).to_a.include?(index)
-  end
-
-  def c_shift_range(index)
-    (2..10000).step(4).to_a.include?(index)
-  end
-
-  def d_shift_range(index)
-    (3..10000).step(4).to_a.include?(index)
   end
 end

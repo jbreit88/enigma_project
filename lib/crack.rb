@@ -1,11 +1,17 @@
 require 'date'
 require './lib/enigma'
 
+if ARGV.count != 3
+  puts "Invalid input."
+  exit
+end
+
 message_file = ARGV[0]
 cracked_file = ARGV[1]
 message_date = ARGV[2]
 
 def crack_message(message_file, cracked_file, message_date)
+
   enigma = Enigma.new
 
   message_text = File.read(message_file)
@@ -15,7 +21,7 @@ def crack_message(message_file, cracked_file, message_date)
 
 
   crack_info = enigma.crack(message_text, message_date)
-  
+
   cracked_text.puts(crack_info[:decryption])
   cracked_text.close
 
