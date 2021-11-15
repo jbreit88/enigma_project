@@ -25,10 +25,3 @@ def encrypt_message(message_file, encrypted_file)
 end
 
 encrypt_message(message_file, encrypted_file)
-#two command line arguments
-
-#take in existing txt with message to encrypt
-
-#write encrypted message to new txt file.
-
-#Output to screen file name, key, and date.

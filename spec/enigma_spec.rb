@@ -70,17 +70,23 @@ RSpec.describe Enigma do
 
       expect(expected[:encryption]).to eq "puhtwpswza !"
     end
+  end
 
-    it 'returns error message if key is not a key' do
-      expect(enigma.encrypt("Hello World!", "0134", "091299")).to be nil
-    end
+  describe '#decrypt' do
+    it 'resets encrypted message to original' do
+      message = "puhtwpswza !"
+      decrypt_message = "hello world!"
+      key = "01234"
+      date = "091299"
+      expect(enigma.decrypt(message, key, date)).to be_a Hash
 
-    it 'returns error message if date is not a date' do
-      expect(enigma.encrypt("Hello World!", "01234", "09199")).to be nil
+      expect(enigma.decrypt(message, key, date).values).to include(decrypt_message)
+      expect(enigma.decrypt(message, key, date).values).to include(date)
+      expect(enigma.decrypt(message, key, date).values).to include(key)
     end
   end
 
-  describe 'it returns error messages if date and key are input incorrectly' do
+  describe 'it returns error messages if date and key are input incorrectly in encrypt and decrypt methods' do
     before(:each) do
       @enigma_1 = Enigma.new
     end
@@ -100,20 +106,6 @@ RSpec.describe Enigma do
     specify {expect{(@enigma_1.encrypt("Hello World!", "01234", "09299"))}.to output(/That input is incorrect! Please input again/).to_stdout}
 
     specify {expect{(@enigma_1.decrypt("Hello World!", "01234", "09299"))}.to output(/That input is incorrect! Please input again/).to_stdout}
-  end
-
-  describe '#decrypt' do
-    it 'resets encrypted message to original' do
-      message = "puhtwpswza !"
-      decrypt_message = "hello world!"
-      key = "01234"
-      date = "091299"
-      expect(enigma.decrypt(message, key, date)).to be_a Hash
-
-      expect(enigma.decrypt(message, key, date).values).to include(decrypt_message)
-      expect(enigma.decrypt(message, key, date).values).to include(date)
-      expect(enigma.decrypt(message, key, date).values).to include(key)
-    end
   end
 
   it 'checks if date is real' do
