@@ -11,9 +11,6 @@ RSpec.describe Enigma do
   end
 
   it 'has attributes' do
-    expect(enigma.message).to eq nil
-    expect(enigma.key).to eq nil
-    expect(enigma.offset).to eq nil
     expect(enigma.character_set).to be_a Array
     expect(enigma.character_set.length).to eq 27
   end
@@ -37,28 +34,10 @@ RSpec.describe Enigma do
       @enigma_1.encrypt("Hello World!", "01234", "091299")
     end
 
-    it 'takes three arguments' do
-      expect(@enigma_1.message).to eq(["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", "!"])
-      expect(@enigma_1.key).to be_a Key
-      expect(@enigma_1.key.key_digits).to be_a Array
-      expect(@enigma_1.key.key_digits).to eq ['0', '1', '2', '3', '4']
-      expect(@enigma_1.key.a_shift).to eq 1
-      expect(@enigma_1.key.b_shift).to eq 12
-      expect(@enigma_1.offset).to be_a Offset
-      expect(@enigma_1.offset.offset_digits).to be_a Array
-      expect(@enigma_1.offset.offset_digits).to eq [7, 4, 0, 1]
-    end
-
-    it 'can take only message arg' do
-      enigma.encrypt("Hello World!")
-
-      expect(enigma.message).to eq(["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", "!"])
-      expect(enigma.key).to be_a Key
-      expect(enigma.key.key_digits).to be_a Array
-      expect('0'..'99').to include enigma.key.key_digits[0]
-      expect(enigma.offset).to be_a Offset
-      expect(enigma.offset.offset_digits).to be_a Array
-      expect(0..9).to include enigma.offset.offset_digits[1]
+    it 'returns a hash of proper length with keys when given only one argument' do
+      expect(enigma.encrypt("Hello World!")).to be_a Hash
+      expect(enigma.encrypt("Hello World!").count).to eq 3
+      expect(enigma.encrypt("Hello World!").keys).to eq [:encryption, :key, :date]
     end
 
     it 'returns encrypted message' do
@@ -97,7 +76,11 @@ RSpec.describe Enigma do
 
     specify {expect{(@enigma_1.encrypt("Hello World!", "01234", "09129"))}.to output.to_stdout}
 
+    specify {expect{(@enigma_1.encrypt("Hello World!", "01234", "351920"))}.to output.to_stdout}
+
     specify {expect{(@enigma_1.decrypt("Hello World!", "01234", "09129"))}.to output.to_stdout}
+
+    specify {expect{(@enigma_1.decrypt("Hello World!", "01234", "351920"))}.to output.to_stdout}
 
     specify {expect{(@enigma_1.encrypt("Hello World!", "0134", "091299"))}.to output(/That input is incorrect! Please input again/).to_stdout}
 
@@ -106,6 +89,10 @@ RSpec.describe Enigma do
     specify {expect{(@enigma_1.encrypt("Hello World!", "01234", "09299"))}.to output(/That input is incorrect! Please input again/).to_stdout}
 
     specify {expect{(@enigma_1.decrypt("Hello World!", "01234", "09299"))}.to output(/That input is incorrect! Please input again/).to_stdout}
+
+    specify {expect{(@enigma_1.encrypt("Hello World!", "01234", "351920"))}.to output(/That input is incorrect! Please input again/).to_stdout}
+
+    specify {expect{(@enigma_1.decrypt("Hello World!", "01234", "351920"))}.to output(/That input is incorrect! Please input again/).to_stdout}
   end
 
   it 'checks if date is real' do

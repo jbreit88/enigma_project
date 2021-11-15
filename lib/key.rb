@@ -7,7 +7,12 @@ class Key
   def initialize(key)
     @key = key
     @key_digits = key.chars
-    @key_shifts = {a_shift: a_shift, b_shift: b_shift, c_shift: c_shift, d_shift: d_shift}
+    @key_shifts = {
+      a_shift: a_shift,
+      b_shift: b_shift,
+      c_shift: c_shift,
+      d_shift: d_shift
+    }
   end
 
   def a_shift

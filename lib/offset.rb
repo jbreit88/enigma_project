@@ -7,7 +7,12 @@ class Offset
   def initialize(date)
     @date = date
     @offset_digits = get_digits
-    @offset_shifts = {a_shift: @offset_digits[0], b_shift: @offset_digits[1], c_shift: @offset_digits[2], d_shift: @offset_digits[3]}
+    @offset_shifts = {
+      a_shift: @offset_digits[0],
+      b_shift: @offset_digits[1],
+      c_shift: @offset_digits[2],
+      d_shift: @offset_digits[3]
+    }
   end
 
   def square_date
