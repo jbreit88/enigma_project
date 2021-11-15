@@ -1,7 +1,9 @@
 require './lib/helpable'
+require './lib/key'
 
 RSpec.describe Helpable do
   let(:dummy_class) {Class.new {extend Helpable}}
+  let(:key) {Key.new('01234')}
 
   describe '#helper_methods' do
     it 'generates a 5 digit key' do
@@ -38,15 +40,15 @@ RSpec.describe Helpable do
       end
     end
 
-    describe '#has retun methods' do
+    describe '#has return methods' do
       it 'returns a hash with args set as values for encryption' do
-        expect(dummy_class.return_encryption_hash("Hello", "1234", "5678")).to be_a Hash
-        expect(dummy_class.return_encryption_hash("Hello", "1234", "5678")).to eq({encryption: "Hello", key: "1234", date: "5678"})
+        expect(dummy_class.return_encryption_hash("Hello", key, "5678")).to be_a Hash
+        expect(dummy_class.return_encryption_hash("Hello", key, "5678")).to eq({encryption: "Hello", key: "01234", date: "5678"})
       end
 
       it 'returns a hash with args set as values for decryption' do
-        expect(dummy_class.return_decryption_hash("Hello", "1234", "5678")).to be_a Hash
-        expect(dummy_class.return_decryption_hash("Hello", "1234", "5678")).to eq({decryption: "Hello", key: "1234", date: "5678"})
+        expect(dummy_class.return_decryption_hash("Hello", key, "5678")).to be_a Hash
+        expect(dummy_class.return_decryption_hash("Hello", key, "5678")).to eq({decryption: "Hello", key: "01234", date: "5678"})
       end
 
       it 'returns a hash with args set as values for cracking' do
