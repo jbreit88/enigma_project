@@ -1,6 +1,12 @@
 require 'date'
 require './lib/enigma'
 
+
+if ARGV.count != 4
+  puts "Invalid input."
+  exit
+end
+
 encrypted_file = ARGV[0]
 decrypted_file = ARGV[1]
 decrypt_key = ARGV[2]
