@@ -13,7 +13,6 @@ class Enigma
   def initialize
     @message = nil
     @key = nil
-    # @date = check_date(date)
     @offset = nil
     @character_set = ('a'..'z').to_a << " "
   end

@@ -27,8 +27,9 @@ module Helpable
   # Calculate total shift values from keys and offsets
 
   def total_shift(key_shifts_hash, offset_shifts_hash)
-    total_shift = key_shifts_hash.merge(offset_shifts_hash) {|key_shift, key_shift_value, offset_value| key_shift_value + offset_value}
-
+    total_shift = key_shifts_hash.merge(offset_shifts_hash) do |key_shift, key_shift_value, offset_value|
+       key_shift_value + offset_value
+     end
     total_shift.values
   end
 
