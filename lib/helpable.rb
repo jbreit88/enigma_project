@@ -21,8 +21,8 @@ module Helpable
   end
 
   def error_message # Error for incorrectly input information.
-    puts "That input is incorrect!"
-    puts "Please input again."
+    puts "That input is incorrect! Please input again."
+
   end
 
 
@@ -59,23 +59,5 @@ module Helpable
       shift_values: key,
       date: date
     }
-  end
-
-  # Create range arrays for shifts
-
-  def a_shift_range(index)
-    (0..10000).step(4).to_a.include?(index)
-  end
-
-  def b_shift_range(index)
-    (1..10000).step(4).to_a.include?(index)
-  end
-
-  def c_shift_range(index)
-    (2..10000).step(4).to_a.include?(index)
-  end
-
-  def d_shift_range(index)
-    (3..10000).step(4).to_a.include?(index)
   end
 end
