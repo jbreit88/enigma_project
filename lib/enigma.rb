@@ -80,22 +80,18 @@ class Enigma
       if index == 0
         char_set_index = @character_set.find_index(character)
         shift = 26 - char_set_index
-        #shifts_array << shift
         shifts_array.unshift(shift)
       elsif index == 1
         char_set_index = @character_set.find_index(character)
         shift = 4 - char_set_index
-        #shifts_array << shift
         shifts_array.unshift(shift)
       elsif index == 2
         char_set_index = @character_set.find_index(character)
         shift = 13 - char_set_index
-        #shifts_array << shift
         shifts_array.unshift(shift)
       elsif index == 3
         char_set_index = @character_set.find_index(character)
         shift = 3 - char_set_index
-        #shifts_array << shift
         shifts_array.unshift(shift)
       end
     end
@@ -110,20 +106,10 @@ class Enigma
       else
         encrypted_character = @character_set.rotate(shifts_array[shift]).slice(slice_index)
         decrypted_message << encrypted_character
-      # elsif shift == 0 #a_shift_range(index)
-      #   encrypted_character = @character_set.rotate(shifts_array[3]).slice(slice_index)
-      #   decrypted_message << encrypted_character
-      # elsif shift = 1b_shift_range(index)
-      #   encrypted_character = @character_set.rotate(shifts_array[2]).slice(slice_index)
-      #   decrypted_message << encrypted_character
-      # elsif c_shift_range(index)
-      #   encrypted_character = @character_set.rotate(shifts_array[1]).slice(slice_index)
-      #   decrypted_message << encrypted_character
-      # elsif d_shift_range(index)
-      #   encrypted_character = @character_set.rotate(shifts_array[0]).slice(slice_index)
-      #   decrypted_message << encrypted_character
       end
     end
     return_cracked_hash(decrypted_message.reverse.join, shifts_array, date)
+
+    # Need another piece/helper method to take the date and shifts and generate the key used.
   end
 end
