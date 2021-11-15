@@ -80,6 +80,28 @@ RSpec.describe Enigma do
     end
   end
 
+  describe 'it returns error messages if date and key are input incorrectly' do
+    before(:each) do
+      @enigma_1 = Enigma.new
+    end
+
+    specify {expect{(@enigma_1.encrypt("Hello World!", "0134", "091299"))}.to output.to_stdout}
+
+    specify {expect{(@enigma_1.decrypt("Hello World!", "0134", "091299"))}.to output.to_stdout}
+
+    specify {expect{(@enigma_1.encrypt("Hello World!", "01234", "09129"))}.to output.to_stdout}
+
+    specify {expect{(@enigma_1.decrypt("Hello World!", "01234", "09129"))}.to output.to_stdout}
+
+    specify {expect{(@enigma_1.encrypt("Hello World!", "0134", "091299"))}.to output(/That input is incorrect! Please input again/).to_stdout}
+
+    specify {expect{(@enigma_1.decrypt("Hello World!", "0134", "091299"))}.to output(/That input is incorrect! Please input again/).to_stdout}
+
+    specify {expect{(@enigma_1.encrypt("Hello World!", "01234", "09299"))}.to output(/That input is incorrect! Please input again/).to_stdout}
+
+    specify {expect{(@enigma_1.decrypt("Hello World!", "01234", "09299"))}.to output(/That input is incorrect! Please input again/).to_stdout}
+  end
+
   describe '#decrypt' do
     it 'resets encrypted message to original' do
       message = "puhtwpswza !"
