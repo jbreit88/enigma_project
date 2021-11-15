@@ -27,7 +27,6 @@ class Enigma
     @key = Key.new(key)
     @offset = Offset.new(date)
 
-
     encrypted_message = []
 
     final_shifted_values = total_shift(@key.key_shifts, @offset.offset_shifts)
