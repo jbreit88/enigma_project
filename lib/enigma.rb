@@ -1,72 +1,92 @@
 require_relative 'helpable'
 require './lib/key'
 require './lib/offset'
+require './lib/translator'
 
 class Enigma
   include Helpable
 
-  attr_reader :message,
-              :key,
-              :offset,
-              :character_set
+  attr_reader :character_set#,
+              # :message,
+              # :key,
+              # :offset,
 
   def initialize
-    @message = nil
-    @key = nil
-    @offset = nil
+    # @message = nil
+    # @key = nil
+    # @offset = nil
     @character_set = ('a'..'z').to_a << " "
   end
 
+  # def error_check(key, date)
+  #   return error_message unless key.length == 5
+  #   return error_message unless date.length == 6
+  #   return error_message unless date_valid?(date) == true
+  # end
+
   def encrypt(message, key = generate_key, date = default_date)
+    # error_check(key, date)
     return error_message unless key.length == 5
     return error_message unless date.length == 6
     return error_message unless date_valid?(date) == true
 
-    @message = message.downcase.chars
-    @key = Key.new(key)
-    @offset = Offset.new(date)
+    translator = Translator.new(@character_set, message, key, date, 1)
+    translator.translate
 
-    encrypted_message = []
+    # @message = message.downcase.chars
+    # @key = Key.new(key)
+    # @offset = Offset.new(date)
 
-    final_shifted_values = total_shift(@key.key_shifts, @offset.offset_shifts)
 
-    @message.each_with_index do |character, index|
-      shift = index % final_shifted_values.length
-      slice_index = @character_set.find_index(character)
-      if !@character_set.include?(character)
-        encrypted_message << character
-      else
-        encrypted_character = @character_set.rotate(final_shifted_values[shift]).slice(slice_index)
-        encrypted_message << encrypted_character
-      end
-    end
-    return_encryption_hash(encrypted_message.join, key, date)
+    # encrypted_message = []
+    #
+    # final_shifted_values = total_shift(@key.key_shifts, @offset.offset_shifts)
+    #
+    # @message.each_with_index do |character, index|
+    #   shift = index % final_shifted_values.length
+    #   slice_index = @character_set.find_index(character)
+    #   if !@character_set.include?(character)
+    #     encrypted_message << character
+    #   else
+    #     encrypted_character = @character_set.rotate(final_shifted_values[shift]).slice(slice_index)
+    #     encrypted_message << encrypted_character
+    #   end
+    # end
+    # return_encryption_hash(encrypted_message.join, key, date)
   end
 
   def decrypt(message, key, date)
+    # error_check(key, date)
     return error_message unless key.length == 5
     return error_message unless date.length == 6
     return error_message unless date_valid?(date) == true
 
-    @message = message.downcase.chars
-    @key = Key.new(key)
-    @offset = Offset.new(date)
+    translator = Translator.new(@character_set, message, key, date, -1)
+    translator.translate
 
-    final_shifted_values = total_shift(@key.key_shifts, @offset.offset_shifts)
-
-    decrypted_message = []
-
-    @message.each_with_index do |character, index|
-      shift = index % final_shifted_values.length
-      slice_index = @character_set.find_index(character)
-      if !@character_set.include?(character)
-        decrypted_message << character
-      else
-        encrypted_character = @character_set.rotate(-final_shifted_values[shift]).slice(slice_index)
-        decrypted_message << encrypted_character
-      end
-    end
-    return_decryption_hash(decrypted_message.join, key, date)
+    # return error_message unless key.length == 5
+    # return error_message unless date.length == 6
+    # return error_message unless date_valid?(date) == true
+    #
+    # @message = message.downcase.chars
+    # @key = Key.new(key)
+    # @offset = Offset.new(date)
+    #
+    # final_shifted_values = total_shift(@key.key_shifts, @offset.offset_shifts)
+    #
+    # decrypted_message = []
+    #
+    # @message.each_with_index do |character, index|
+    #   shift = index % final_shifted_values.length
+    #   slice_index = @character_set.find_index(character)
+    #   if !@character_set.include?(character)
+    #     decrypted_message << character
+    #   else
+    #     encrypted_character = @character_set.rotate(-final_shifted_values[shift]).slice(slice_index)
+    #     decrypted_message << encrypted_character
+    #   end
+    # end
+    # return_decryption_hash(decrypted_message.join, key, date)
   end
 
   def crack(message, date = default_date)

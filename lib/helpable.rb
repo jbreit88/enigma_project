@@ -38,7 +38,7 @@ module Helpable
   def return_encryption_hash(message, key, date)
     return_info_hash = {
       encryption: message,
-      key: key,
+      key: key.key,
       date: date
     }
   end
@@ -46,7 +46,7 @@ module Helpable
   def return_decryption_hash(message, key, date)
     return_info_hash = {
       decryption: message,
-      key: key,
+      key: key.key,
       date: date
     }
   end
