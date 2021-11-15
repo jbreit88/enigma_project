@@ -40,23 +40,10 @@ class Enigma
       else
         encrypted_character = @character_set.rotate(final_shifted_values[shift]).slice(slice_index)
         encrypted_message << encrypted_character
-        # elsif (0..1000).step(4).to_a.include?(index)
-        #   encrypted_character = @character_set.rotate(final_shifted_values[shift]).slice(slice_index)
-        #   encrypted_message << encrypted_character
-        # elsif (1..1001).step(4).to_a.include?(index)
-        #   encrypted_character = @character_set.rotate(final_shifted_values[1]).slice(slice_index)
-        #   encrypted_message << encrypted_character
-        # elsif (2..1002).step(4).to_a.include?(index)
-        #   encrypted_character = @character_set.rotate(final_shifted_values[2]).slice(slice_index)
-        #   encrypted_message << encrypted_character
-        # elsif (3..1003).step(4).to_a.include?(index)
-        #   encrypted_character = @character_set.rotate(final_shifted_values[3]).slice(slice_index)
-        #   encrypted_message << encrypted_character
       end
     end
     return_encryption_hash(encrypted_message.join, key, date)
   end
-
 
   def decrypt(message, key, date)
     return error_message unless key.length == 5
@@ -79,18 +66,6 @@ class Enigma
       else
         encrypted_character = @character_set.rotate(-final_shifted_values[shift]).slice(slice_index)
         decrypted_message << encrypted_character
-      # elsif a_shift_range(index)
-      #   encrypted_character = @character_set.rotate(-final_shifted_values[0]).slice(slice_index)
-      #   decrypted_message << encrypted_character
-      # elsif b_shift_range(index)
-      #   encrypted_character = @character_set.rotate(-final_shifted_values[1]).slice(slice_index)
-      #   decrypted_message << encrypted_character
-      # elsif c_shift_range(index)
-      #   encrypted_character = @character_set.rotate(-final_shifted_values[2]).slice(slice_index)
-      #   decrypted_message << encrypted_character
-      # elsif d_shift_range(index)
-      #   encrypted_character = @character_set.rotate(-final_shifted_values[3]).slice(slice_index)
-      #   decrypted_message << encrypted_character
       end
     end
     return_decryption_hash(decrypted_message.join, key, date)
@@ -98,9 +73,8 @@ class Enigma
 
   def crack(message, date = default_date)
     message = message.chomp.downcase.chars
-    # require "pry"; binding.pry
     message_last_four = message.slice(-4..-1)
-    shifts_array = [] # array of integers indicating the four shifts for letters
+    shifts_array = []
 
     message_last_four.each_with_index do |character, index|
       if index == 0
