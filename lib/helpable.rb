@@ -54,7 +54,7 @@ module Helpable
   def return_cracked_hash(message, key, date)
     return_info_hash = {
       decryption: message,
-      shift_values: key,
+      key: key,
       date: date
     }
   end

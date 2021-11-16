@@ -25,7 +25,7 @@ def crack_message(message_file, cracked_file, message_date)
   cracked_text.puts(crack_info[:decryption])
   cracked_text.close
 
-  puts "Created '#{cracked_file}' with the shifts #{crack_info[:shift_values]}."
+  puts "Created '#{cracked_file}' with the key #{crack_info[:key]} and the date #{crack_info[:date]}."
 end
 
 

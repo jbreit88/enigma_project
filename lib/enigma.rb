@@ -31,8 +31,10 @@ class Enigma
   end
 
   def crack(message, date = default_date)
-    message = message.chomp.downcase.chars
-    message_last_four = message.slice(-4..-1)
+    message_for_decrypt = message
+    date_for_decrypt = date
+    message_ready = message.chomp.downcase.chars
+    message_last_four = message_ready.slice(-4..-1)
     shifts_array = []
 
     message_last_four.each_with_index do |character, index|
@@ -57,7 +59,7 @@ class Enigma
 
     decrypted_message = []
 
-    message.reverse.each_with_index do |character, index|
+    message_ready.reverse.each_with_index do |character, index|
       shift = index % shifts_array.length
       slice_index = @character_set.find_index(character)
       if !@character_set.include?(character)
@@ -67,8 +69,17 @@ class Enigma
         decrypted_message << encrypted_character
       end
     end
-    return_cracked_hash(decrypted_message.reverse.join, shifts_array, date)
 
-    # Need another piece/helper method to take the date and shifts and generate the key used.
+    possibilities_array = ('0'..'99999').to_a.map {|poss| poss.rjust(5, '0')}
+    key = []
+
+    possibilities_array.each do |possible_key|
+      check_message = decrypt(message_for_decrypt, possible_key, date_for_decrypt)
+      if decrypted_message.reverse.join == check_message[:decryption].chomp
+        key << possible_key
+      end
+    end
+
+    return_cracked_hash(decrypted_message.reverse.join, key[0], date)
   end
 end
