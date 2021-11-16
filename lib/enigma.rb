@@ -31,8 +31,10 @@ class Enigma
   end
 
   def crack(message, date = default_date)
-    message = message.chomp.downcase.chars
-    message_last_four = message.slice(-4..-1)
+    message_for_decrypt = message
+    date_for_decrypt = date
+    message_ready = message.chomp.downcase.chars
+    message_last_four = message_ready.slice(-4..-1)
     shifts_array = []
 
     message_last_four.each_with_index do |character, index|
@@ -57,7 +59,7 @@ class Enigma
 
     decrypted_message = []
 
-    message.reverse.each_with_index do |character, index|
+    message_ready.reverse.each_with_index do |character, index|
       shift = index % shifts_array.length
       slice_index = @character_set.find_index(character)
       if !@character_set.include?(character)
@@ -67,99 +69,110 @@ class Enigma
         decrypted_message << encrypted_character
       end
     end
-    # return_cracked_hash(decrypted_message.reverse.join, shifts_array, date)
 
-    # Need another piece/helper method to take the date and shifts and generate the key used.
-    #get positive shift integers
-    test_shifts_array = shifts_array.reverse
-    # positive_adjusted_shifts = []
-    # shifts_array.each do |shift|
-    #   if shift < 0
-    #     change = shift + 27
-    #     positive_adjusted_shifts << change
-    #   else
-    #     positive_adjusted_shifts << shift
-    #   end
-    # end
+    possibilities_array = ('0'..'99999').to_a.map {|poss| poss.rjust(5, '0')}
+    key = []
 
-    #set shifts in array to ABCD sequence
-    if message.length % 4 == 0
-      test_shifts_array
-    elsif message.length % 4 == 1
-      test_shifts_array.rotate
-    elsif message.length % 4 == 2
-      test_shifts_array.rotate(2)
-    elsif message.length % 4 == 3
-      test_shifts_array.rotate(3)
-    end
-
-    #get date offset array
-    date_squared = date.to_i ** 2
-    date_offset_array = date_squared.to_s.chars.slice(-4..-1).map {|x| x.to_i}
-
-
-    #Subtract offsets from shifts and put in array
-    a_base_key = test_shifts_array[0] - date_offset_array[0]
-    b_base_key = test_shifts_array[1] - date_offset_array[1]
-    c_base_key = test_shifts_array[2] - date_offset_array[2]
-    d_base_key = test_shifts_array[3] - date_offset_array[3]
-
-    # if a_base_key < 0
-    #   a_base_key += 27
-    # end
-    #
-    # if b_base_key < 0
-    #   b_base_key += 27
-    # end
-    #
-    # if c_base_key < 0
-    #   c_base_key += 27
-    # end
-    #
-    # if d_base_key < 0
-    #   d_base_key += 27
-    # end
-
-    key_base_values = [a_base_key, b_base_key, c_base_key, d_base_key].map {|key| key.to_s.rjust(2, '0')}
-
-    #get all possibilities for each base key
-    a_key_possibilities = (a_base_key..99).step(27).to_a.map {|step| step.to_s.rjust(2, '0')}
-    b_key_possibilities = (b_base_key..99).step(27).to_a.map {|step| step.to_s.rjust(2, '0')}
-    c_key_possibilities = (c_base_key..99).step(27).to_a.map {|step| step.to_s.rjust(2, '0')}
-    d_key_possibilities = (d_base_key..99).step(27).to_a.map {|step| step.to_s.rjust(2, '0')}
-
-    final_key = []
-    a_key_possibilities.each do |a_poss|
-      final_key << a_poss[0]
-      final_key << a_poss[1]
-      b_key_possibilities.each do |b_poss|
-        if b_poss[0] == a_poss[1]
-          final_key << b_poss[1]
-          c_key_possibilities.each do |c_poss|
-            if c_poss[0] == b_poss[1]
-              final_key << c_poss[1]
-              d_key_possibilities.each do |d_poss|
-                if d_poss[0] == c_poss[1]
-                  final_key << d_poss[1]
-                  break
-                else
-                  final_key.clear
-                  require "pry"; binding.pry
-                end
-              end
-            else
-              final_key.clear
-            end
-          end
-        else
-          final_key.clear
-        end
+    possibilities_array.each do |possible_key|
+      check_message = decrypt(message_for_decrypt, possible_key, date_for_decrypt)
+      if decrypted_message.reverse.join == check_message[:decryption].chomp
+        key << possible_key
       end
     end
 
-    final_key_string = final_key.join
+    return_cracked_hash(decrypted_message.reverse.join, key[0], date)
 
-    return_cracked_hash(decrypted_message.reverse.join, final_key_string, date)
+    # Need another piece/helper method to take the date and shifts and generate the key used.
+    #get positive shift integers
+    # test_shifts_array = shifts_array.reverse
+    # # positive_adjusted_shifts = []
+    # # shifts_array.each do |shift|
+    # #   if shift < 0
+    # #     change = shift + 27
+    # #     positive_adjusted_shifts << change
+    # #   else
+    # #     positive_adjusted_shifts << shift
+    # #   end
+    # # end
+    #
+    # #set shifts in array to ABCD sequence
+    # if message.length % 4 == 0
+    #   test_shifts_array
+    # elsif message.length % 4 == 1
+    #   test_shifts_array.rotate
+    # elsif message.length % 4 == 2
+    #   test_shifts_array.rotate(2)
+    # elsif message.length % 4 == 3
+    #   test_shifts_array.rotate(3)
+    # end
+    #
+    # #get date offset array
+    # date_squared = date.to_i ** 2
+    # date_offset_array = date_squared.to_s.chars.slice(-4..-1).map {|x| x.to_i}
+    #
+    #
+    # #Subtract offsets from shifts and put in array
+    # a_base_key = test_shifts_array[0] - date_offset_array[0]
+    # b_base_key = test_shifts_array[1] - date_offset_array[1]
+    # c_base_key = test_shifts_array[2] - date_offset_array[2]
+    # d_base_key = test_shifts_array[3] - date_offset_array[3]
+    #
+    # # if a_base_key < 0
+    # #   a_base_key += 27
+    # # end
+    # #
+    # # if b_base_key < 0
+    # #   b_base_key += 27
+    # # end
+    # #
+    # # if c_base_key < 0
+    # #   c_base_key += 27
+    # # end
+    # #
+    # # if d_base_key < 0
+    # #   d_base_key += 27
+    # # end
+    #
+    # key_base_values = [a_base_key, b_base_key, c_base_key, d_base_key].map {|key| key.to_s.rjust(2, '0')}
+    #
+    # #get all possibilities for each base key
+    # a_key_possibilities = (a_base_key..99).step(27).to_a.map {|step| step.to_s.rjust(2, '0')}
+    # b_key_possibilities = (b_base_key..99).step(27).to_a.map {|step| step.to_s.rjust(2, '0')}
+    # c_key_possibilities = (c_base_key..99).step(27).to_a.map {|step| step.to_s.rjust(2, '0')}
+    # d_key_possibilities = (d_base_key..99).step(27).to_a.map {|step| step.to_s.rjust(2, '0')}
+    #
+    # final_key = []
+    # a_key_possibilities.each do |a_poss|
+    #   final_key << a_poss[0]
+    #   final_key << a_poss[1]
+    #   b_key_possibilities.each do |b_poss|
+    #     if b_poss[0] == a_poss[1]
+    #       final_key << b_poss[1]
+    #       c_key_possibilities.each do |c_poss|
+    #         if c_poss[0] == b_poss[1]
+    #           final_key << c_poss[1]
+    #           d_key_possibilities.each do |d_poss|
+    #             if d_poss[0] == c_poss[1]
+    #               final_key << d_poss[1]
+    #               break
+    #             else
+    #               final_key.clear
+    #               require "pry"; binding.pry
+    #             end
+    #           end
+    #         else
+    #           final_key.clear
+    #         end
+    #       end
+    #     else
+    #       final_key.clear
+    #     end
+    #   end
+    # end
+    #
+    # final_key_string = final_key.join
+
+    # return_cracked_hash(decrypted_message.reverse.join, final_key_string, date)
 
 
     # require "pry"; binding.pry
