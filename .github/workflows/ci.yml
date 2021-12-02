@@ -26,9 +26,9 @@ jobs:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: install dependencies
-      run: bundle install
+      run: gem install rspec simplecov
     - name: Run RSpec
-      run: COVERAGE=true bundle exec rspec
+      run: rspec
     - name: Test & publish code coverage
       uses: paambaati/codeclimate-action@v3.0.0
       env:
